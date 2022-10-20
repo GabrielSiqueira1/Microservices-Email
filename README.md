@@ -45,12 +45,12 @@
     </ol>
     <li>I/O (Entrada e saída)
     <ol>
-        <li>Validation: ;</li>
-        <li>Java Mail Sender: .</li>
+        <li>Validation: Realiza a validação do processo;</li>
+        <li>Java Mail Sender: Realiza o processo de envio do e-mail.</li>
     </ol>
     <li>Ferramentas de desenvolvimento
     <ol>
-        <li>Lombok: .</li>
+        <li>Lombok: Auxilia na remoção de partes de código repetidas.</li>
     </ol>
     </li>
 </ol> 
