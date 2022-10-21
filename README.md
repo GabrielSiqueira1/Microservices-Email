@@ -184,6 +184,42 @@ A validação @NotBlank define que o setor recebido, por POST, não pode estar v
 ## Configurando interfaces (repositories), services e controllers
 ---
   
+Anteriormente fora definido a forma da disposição das tabelas que vão compor o sistema, e portanto, é necessário estipular algo que povoe o sistema, para isso utilizamos uma interface que extende o JpaRepository, administrador de dados, dos quais, são formados pela entidade MEmail, já que esse é o modelo. Então, nos repositories adicionamos um arquivo com o seguinte código:
+
+```
+package com.microservices.email.repositories;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.microservices.email.models.MEmail;
+
+public interface REmail extends JpaRepository<MEmail, Long>{
+
+}
+
+```
+
+Com a interface criada, devemos criar um serviço para que ocorra a manipulação e a efetiva inserção dos dados. Portanto em serviços, criamos um novo arquivo com o seguinte detalhamento:
+  
+```
+  package com.microservices.email.services;
+
+  import org.springframework.beans.factory.annotation.Autowired;
+  import org.springframework.stereotype.Service;
+
+  import com.microservices.email.repositories.REmail;
+
+  @Service
+  public class SEmail {
+
+      @Autowired // Ponto de inserção de dados
+      REmail emailRepository;
+  }
+
+```
+
+
+  
 </div>
 
 
