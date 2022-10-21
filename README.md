@@ -222,7 +222,7 @@ Com a interface criada, devemos criar um serviço para que ocorra a manipulaçã
   }
 
 ```
-
+Com o objetivo de conectar as operações do serviço com as tabelas que deverão existir se faz necessário o uso de um controlador. O controlador nesse caso cuidará do envio de e-mails, validando-os e os tranformando de DTO para modelo dessa forma o prontificando para a inserção. 
   
 ```
 package com.microservices.email.controller;
