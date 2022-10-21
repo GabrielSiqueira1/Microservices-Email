@@ -93,7 +93,7 @@ Lembrando que 5432 é a porta padrão, caso tenha alterado, use a sua e o ms-ema
 </div>
 
 ---
-# Desenvolvimento
+###### Configurando o model para recebimento de e-mails
 ---
 
 Com o banco de dados inicializado, devemos estabelecer as partes do nosso microsserviço e suas responsabilidades, começando pela pasta model, devemos criar um sistema de recebimento de armazenamento das informações do e-mail, destinatário e remetente, a data, o conteúdo e tudo que compõe o processo de comunicação, dito isso, em model, cria-se:
@@ -147,6 +147,9 @@ public enum StatusEmail {
 
 ```
 
+---
+###### Configurando o dtos
+---
 
 
 </div>
