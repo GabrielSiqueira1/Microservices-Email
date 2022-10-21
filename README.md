@@ -150,6 +150,7 @@ public enum StatusEmail {
 ---
 ## Configurando o dtos
 ---
+Utilizado para transportar dados entre diferentes componentes de um sistema.
 
 
 </div>
