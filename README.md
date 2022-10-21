@@ -27,7 +27,7 @@
  - IDE da sua escolha, nesse roteiro será utilizado o VSCode.
  
 ----
-## Criação
+# Parte 1 - Codificação inicial
 ----
 
 <div align='justify'>
@@ -65,8 +65,207 @@
     <img src="img/tree.png"/>
   </div>
 
-</div>
-
 ----
 ## Setup inicial e inicialização do banco de dados
 ----
+
+A fim de separar todo o processo em várias etapas, propomos a construção de algumas pastas para separação de arquivos, são elas:
+
+<div align='center'>
+  <img src="img/folders.png"/>
+</div>
+
+Na pasta resources há um arquivo chamado application.properties, esse serve para estabelecer a conexão com o banco de dados, no entanto, ainda está vazio. Como estamos utilizando o PostgreSQL, o código abaixo, com a porta 5432 estabelecerá a conexão:
+
+```
+server.port = 8080
+
+spring.datasource.url = jdbc:postgresql://localhost:5432/ms-email
+spring.datasource.username = postgres
+spring.datasource.password = banco123
+spring.jpa.hibernate.ddl-auto = update
+```
+
+Lembrando que 5432 é a porta padrão, caso tenha alterado, use a sua e o ms-email é o nome do banco criado no PostgreSQL.
+
+<div align='center'>
+  <img src="img/pgadmin4.png"/>
+</div>
+
+---
+## Configurando o model para recebimento de e-mails
+---
+
+Com o banco de dados inicializado, devemos estabelecer as partes do nosso microsserviço e suas responsabilidades, começando pela pasta model, devemos criar um sistema de recebimento de armazenamento das informações do e-mail, destinatário e remetente, a data, o conteúdo e tudo que compõe o processo de comunicação, dito isso, em model, cria-se:
+
+```
+package com.microservices.email.models;
+
+import java.time.LocalDateTime;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+import com.microservices.email.enums.StatusEmail;
+
+import lombok.Data;
+
+@Data // Criação de construtores automatizada
+@Entity // É uma entidade por compor uma banco de dados
+@Table(name = "TB_EMAIL") // Nome da tabela
+public class MEmail {
+    private static final long serialVersionUID = 1L;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    // Geração de e-mails automatica
+    private long emailId;
+    private String ownerRef; // O proprietário da mensagem
+    private String emailFrom; // De quem vem
+    private String emailTo; // Para quem envia
+    private String subject; // Assunto
+    @Column(columnDefinition = "TEXT") // Retira a limitação de 256 caracteres
+    private String text;
+    private LocalDateTime sendDateEmail;
+    private StatusEmail statusEmail;
+}
+```
+
+Como o estado do e-mail não é uma classe própria do Java, devemos criar. Estabeleceremos que ela contenha os possíveis estados de um e-mail, portanto, enviado ou não enviado (error). Passível de enumeração, vamos criar StatusEmail.java na pasta enum com o seguinte código:
+
+```
+package com.microservices.email.enums;
+
+public enum StatusEmail {
+
+    SENT,
+    ERROR;
+}
+
+```
+
+---
+## Configurando o dtos
+---
+Utilizado para transportar dados entre diferentes componentes de um sistema, o dto é utilizado em sistemas distribuídos e sistemas via serialização. A ideia é otimizar a comunicação por meio de um agrupamento de atributos, nesse caso 
+
+```
+package com.microservices.email.dtos;
+
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+
+import lombok.Data;
+
+@Data
+public class DEmail {
+    
+    @NotBlank
+    private String ownerRef;
+    @NotBlank
+    @Email
+    private String emailFrom;
+    @NotBlank
+    @Email
+    private String emailTo;
+    @NotBlank
+    private String subject;
+    @NotBlank
+    private String text;
+}
+
+```
+A validação @NotBlank define que o setor recebido, por POST, não pode estar vazio e além disso, emailFrom e emailTo devem estar no formato de Email e para tal há essa validação de @Email.
+  
+---
+## Configurando interfaces (repositories), services e controllers
+---
+  
+Anteriormente fora definido a forma da disposição das tabelas que vão compor o sistema, e portanto, é necessário estipular algo que povoe o sistema, para isso utilizamos uma interface que extende o JpaRepository, administrador de dados, dos quais, são formados pela entidade MEmail, já que esse é o modelo. Então, nos repositories adicionamos um arquivo com o seguinte código:
+
+```
+package com.microservices.email.repositories;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.microservices.email.models.MEmail;
+
+public interface REmail extends JpaRepository<MEmail, Long>{
+
+}
+
+```
+
+Com a interface criada, devemos criar um serviço para que ocorra a manipulação e a efetiva inserção dos dados. Portanto em serviços, criamos um novo arquivo com o seguinte detalhamento:
+  
+```
+  package com.microservices.email.services;
+
+  import org.springframework.beans.factory.annotation.Autowired;
+  import org.springframework.stereotype.Service;
+
+  import com.microservices.email.repositories.REmail;
+
+  @Service
+  public class SEmail {
+
+      @Autowired // Ponto de inserção de dados
+      REmail emailRepository;
+  
+      public void sendEmail(MEmail emailModel){
+  
+      }
+  }
+
+```
+Com o objetivo de conectar as operações do serviço com as tabelas que deverão existir se faz necessário o uso de um controlador. O controlador nesse caso cuidará do envio de e-mails, validando-os e os tranformando de DTO para modelo dessa forma o prontificando para a inserção. 
+  
+```
+package com.microservices.email.controller;
+
+import javax.validation.Valid;
+
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
+import com.microservices.email.dtos.DEmail;
+import com.microservices.email.models.MEmail;
+import com.microservices.email.services.SEmail;
+
+
+public class CEmail {
+    
+    @Autowired
+    SEmail emailService;
+
+    @PostMapping(value="/sending-email")
+    public ResponseEntity<MEmail> sendingEmail(@RequestBody @Valid DEmail emailDTO) {
+        MEmail emailModel = new MEmail();
+        BeanUtils.copyProperties(emailDTO, emailModel);
+        emailService.sendEmail(emailModel);
+        return new ResponseEntity<>(emailModel, HttpStatus.CREATED);
+    }
+    
+}
+
+```
+<div align='center'>
+  <img src="img/parte1.png"/>
+</div>
+
+---
+# Parte 2 - A instauração do SMTP
+---
+  
+</div>
+
+
+
