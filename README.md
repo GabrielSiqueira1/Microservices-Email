@@ -150,7 +150,7 @@ public enum StatusEmail {
 ---
 ## Configurando o dtos
 ---
-Utilizado para transportar dados entre diferentes componentes de um sistema.
+Utilizado para transportar dados entre diferentes componentes de um sistema, o dto é utilizado em sistemas distribuídos e sistemas via serialização. A ideia é otimizar a comunicação por meio de um agrupamento de atributos, nesse caso 
 
 
 </div>
