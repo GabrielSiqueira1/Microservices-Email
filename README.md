@@ -27,7 +27,7 @@
  - IDE da sua escolha, nesse roteiro será utilizado o VSCode.
  
 ----
-## Criação
+# Parte 1 - Codificação inicial
 ----
 
 <div align='justify'>
@@ -261,6 +261,9 @@ public class CEmail {
   <img src="img/parte1.png"/>
 </div>
 
+---
+# Parte 2 - A instauração do SMTP
+---
   
 </div>
 
