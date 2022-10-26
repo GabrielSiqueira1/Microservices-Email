@@ -326,7 +326,7 @@ public class SEmail {
     @Autowired
     private JavaMailSender emailSender;
 
-    public EmailModel sendEmail(MEmail emailModel) {
+    public MEmail sendEmail(MEmail emailModel) {
         emailModel.setSendDateEmail(LocalDateTime.now());
         try{
             SimpleMailMessage message = new SimpleMailMessage();
