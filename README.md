@@ -334,7 +334,7 @@ Para a realização do teste do serviço de email, após a realização de todos
 
 <div align='center'>
   <img src="img/sub.png" />
-<div>
+</div>
   
   - Atualizar as tabelas do banco de dados ms-email.
   
