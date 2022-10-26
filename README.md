@@ -216,6 +216,7 @@ Com a interface criada, devemos gerar um serviço para que ocorra a manipulaçã
   import org.springframework.beans.factory.annotation.Autowired;
   import org.springframework.stereotype.Service;
 
+  import com.microservices.email.models.MEmail;
   import com.microservices.email.repositories.REmail;
 
   @Service
@@ -282,7 +283,7 @@ server.port=8080
 
 spring.datasource.url= jdbc:postgresql://localhost:5432/ms-email
 spring.datasource.username=postgres
-spring.datasource.password=banco123
+spring.datasource.password=postgres
 spring.jpa.hibernate.ddl-auto=update
 
 spring.mail.host=smtp.gmail.com
@@ -301,6 +302,20 @@ Os campos que restam a serem preenchidos, "username" e "password", devem ser com
 O método responsável pelo envio e salvamento dos emails na base de dados é chamado de sendEmail, localizado no arquivo SEmail da pasta services, que implementa um ponto de injeção com a interface JavaMailSender, do framework Spring Boot, possibilitando a aplicação dessa funcionalidade no projeto:
 
 ```
+package com.microservices.email.services;
+
+import java.time.LocalDateTime;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.MailException;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.stereotype.Service;
+
+import com.microservices.email.enums.StatusEmail;
+import com.microservices.email.models.MEmail;
+import com.microservices.email.repositories.REmail;
+
 @Service
 public class SEmail {
 
