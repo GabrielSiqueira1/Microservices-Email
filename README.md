@@ -297,12 +297,12 @@ O método responsável pelo envio e salvamento dos emails na base de dados é ch
 public class EmailService {
 
     @Autowired
-    EmailRepository emailRepository;
+    REmail emailRepository;
 
     @Autowired
     private JavaMailSender emailSender;
 
-    public EmailModel sendEmail(EmailModel emailModel) {
+    public EmailModel sendEmail(MEmail emailModel) {
         emailModel.setSendDateEmail(LocalDateTime.now());
         try{
             SimpleMailMessage message = new SimpleMailMessage();
@@ -318,14 +318,6 @@ public class EmailService {
         } finally {
             return emailRepository.save(emailModel);
         }
-    }
-
-    public Page<EmailModel> findAll(Pageable pageable) {
-        return  emailRepository.findAll(pageable);
-    }
-
-    public Optional<EmailModel> findById(UUID emailId) {
-        return emailRepository.findById(emailId);
     }
 }
 
