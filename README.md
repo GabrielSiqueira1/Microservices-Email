@@ -267,7 +267,7 @@ public class CEmail {
 
 A fins de demonstração, o envio de emails neste microserviço será feito através da utilização do Simple Mail Transfer Protocol (SMTP) da Google. Para um serviço mais robusto e completo, pode-se utilizar o Amazon SS (Simple Email Service).
 
-Para configurarmos o serviço em nossa aplicação, devemos adicionar e preencher campos específicos no arquivo application.properties. Ao adicionarmos campos utilizando o namespace spring.mail, o arquivo ficará com a seguinte configuração:
+Para configurarmos o serviço em nossa aplicação, devemos adicionar e preencher campos específicos no arquivo application.properties. Ao adicionarmos os campos necessários utilizando o namespace spring.mail, o arquivo ficará com a seguinte configuração:
 
 ```
 server.port=8080
