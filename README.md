@@ -1,6 +1,11 @@
 # Microsserviços - Envio de e-mails
 
 <div align='justify'>
+  
+Integrantes do grupo:
+  - Fernando Garamvolgyi Mafra Veizaga - 20203001902
+  - Gabriel Siqueira Silva - 20203008814
+  
   <p>Microsserviços são arquiteturas de desenvolvimento de software capazes de reduzir grandes sistemas em pequenos serviços de forma a comunicarem através de APIs bem definidas. A vantagem é que esses serviços pertencem a pequenas equipes que em sua maioria são autossuficientes. Esse tipo de arquitetura facilita a escalabilidade e agiliza o desenvolvimento de aplicativos, acelerando o tempo de introdução de novos recursos no mercado.</p>
 
   <p>Portanto, a utilização de arquiteturas moníticas podem ser evitadas já que estas apresentam dificuldades como alto nível de acoplamento e uma escalada alta caso haja um grande pico de demanda. A complexidade de um sistema monolítco aumenta a cada adaptação de código, seja por aumento ou aprimoramento e isso ocasiona o risco da não disponibilidade de aplicações visto que o alto índice de acoplamento pode gerar falhas em um único processo.</p>
