@@ -298,7 +298,7 @@ Para a realização do teste do serviço de email, após a realização de todos
   - Compilar e executar o projeto no Visual Studio Code;
   - Atualizar as tabelas do banco de dados ms-email.
   
-Em seguida, na API Postman, criamos um método POST EMAIL, que será responsável acessar a porta definida no projeto e enviar os atributos necessários do email para o método sending-email.
+Em seguida, na API Postman, criamos um método POST EMAIL, que será responsável por acessar a porta definida no projeto e enviar os atributos necessários do email para o método sending-email.
   
 ![image](https://user-images.githubusercontent.com/110564584/197908189-4d389a5c-f0be-4460-a71b-c40dd9d9c4a1.png)
   
