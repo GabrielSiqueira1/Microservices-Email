@@ -290,7 +290,65 @@ Os campos que restam a serem preenchidos, "username" e "password", devem ser com
   - Username: utiliza-se um endereço de email do próprio programador, que servirá como o remetente dos emails enviados;
   - Password: esse campo deve ser preenchido com uma "senha de aplicativo", ou seja, um código de 16 dígitos gerado ao seguir o passo a passo presente no link https://support.google.com/accounts/answer/185833.
   
-Após a finalização da configuração do SMTP, o serviço já estará pronto para ser testado.
+O método responsável pelo envio e salvamento dos emails na base de dados é chamado de sendEmail, que implementa um ponto de injeção com a interface JavaMailSender, do framework Spring Boot, possibilitando a aplicação dessa funcionalidade no projeto:
+
+```
+package com.ms.email.services;
+
+import com.ms.email.enums.StatusEmail;
+import com.ms.email.models.EmailModel;
+import com.ms.email.repositories.EmailRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.mail.MailException;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
+import java.util.Optional;
+import java.util.UUID;
+
+@Service
+public class EmailService {
+
+    @Autowired
+    EmailRepository emailRepository;
+
+    @Autowired
+    private JavaMailSender emailSender;
+
+    public EmailModel sendEmail(EmailModel emailModel) {
+        emailModel.setSendDateEmail(LocalDateTime.now());
+        try{
+            SimpleMailMessage message = new SimpleMailMessage();
+            message.setFrom(emailModel.getEmailFrom());
+            message.setTo(emailModel.getEmailTo());
+            message.setSubject(emailModel.getSubject());
+            message.setText(emailModel.getText());
+            emailSender.send(message);
+
+            emailModel.setStatusEmail(StatusEmail.SENT);
+        } catch (MailException e){
+            emailModel.setStatusEmail(StatusEmail.ERROR);
+        } finally {
+            return emailRepository.save(emailModel);
+        }
+    }
+
+    public Page<EmailModel> findAll(Pageable pageable) {
+        return  emailRepository.findAll(pageable);
+    }
+
+    public Optional<EmailModel> findById(UUID emailId) {
+        return emailRepository.findById(emailId);
+    }
+}
+
+```
+
+Após a finalização da configuração do SMTP e do método sendEmail, o serviço já estará pronto para ser testado.
 
 ---
 # Parte 3 - Testando o serviço
@@ -301,7 +359,7 @@ Para a realização do teste do serviço de email, após a realização de todos
 
 <div align='center'>
   <img src="img/sub.png" />
-</div>
+<div>
   
   - Atualizar as tabelas do banco de dados ms-email.
   
