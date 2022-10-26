@@ -302,7 +302,7 @@ O método responsável pelo envio e salvamento dos emails na base de dados é ch
 
 ```
 @Service
-public class EmailService {
+public class SEmail {
 
     @Autowired
     REmail emailRepository;
