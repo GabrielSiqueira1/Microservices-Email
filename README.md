@@ -82,7 +82,7 @@ server.port = 8080
 
 spring.datasource.url = jdbc:postgresql://localhost:5432/ms-email
 spring.datasource.username = postgres
-spring.datasource.password = banco123
+spring.datasource.password = postgres
 spring.jpa.hibernate.ddl-auto = update
 ```
 
@@ -164,10 +164,10 @@ import lombok.Data;
 @Data
 public class DEmail {
     
-    @NotBlank
+    @NotBlank // Impede que a informação na tabela seja vazia
     private String ownerRef;
     @NotBlank
-    @Email
+    @Email // Verifica o formato de e-mail
     private String emailFrom;
     @NotBlank
     @Email
@@ -240,7 +240,7 @@ import com.microservices.email.dtos.DEmail;
 import com.microservices.email.models.MEmail;
 import com.microservices.email.services.SEmail;
 
-
+@RestController
 public class CEmail {
     
     @Autowired
@@ -279,8 +279,8 @@ spring.jpa.hibernate.ddl-auto=update
 
 spring.mail.host=smtp.gmail.com
 spring.mail.port=587
-spring.mail.username=********@gmail.com
-spring.mail.password=******************
+spring.mail.username=gabrielsiqueira2765@gmail.com
+spring.mail.password=xkjohmxifgvcgrou
 spring.mail.properties.mail.smtp.auth=true
 spring.mail.properties.mail.smtp.starttls.enable=true
 
@@ -291,8 +291,10 @@ Os campos que restam a serem preenchidos, "username" e "password", devem ser com
   - Password: esse campo deve ser preenchido com uma "senha de aplicativo", ou seja, um código de 16 dígitos gerado ao seguir o passo a passo presente no link https://support.google.com/accounts/answer/185833.
   
 Após a finalização da configuração do SMTP, o serviço já estará pronto para ser testado.
-  
+
+---
 # Parte 3 - Testando o serviço
+---
 
 Para a realização do teste do serviço de email, após a realização de todos os passos anteriores, seguimos as seguintes etapas:
   - Compilar e executar o projeto no Visual Studio Code;
