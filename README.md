@@ -265,7 +265,7 @@ public class CEmail {
 # Parte 2 - A instauração do SMTP
 ---
 
-A fins de demonstração, o envio de emails neste microserviço será feito através da utilização do Simple Mail Transfer Protocol (SMTP) da Google. Para um serviço mais robusto e completo, pode-se utilizar o Amazon SS (Simple Email Service).
+A fins de demonstração, o envio de emails neste microsserviço será feito através da utilização do Simple Mail Transfer Protocol (SMTP) da Google. Para um serviço mais robusto e completo, pode-se utilizar o Amazon SS (Simple Email Service).
 
 Para configurarmos o serviço em nossa aplicação, devemos adicionar e preencher campos específicos no arquivo application.properties. Ao adicionarmos os campos necessários utilizando o namespace spring.mail, o arquivo ficará com a seguinte configuração:
 
@@ -298,13 +298,24 @@ Após a finalização da configuração do SMTP, o serviço já estará pronto p
 
 Para a realização do teste do serviço de email, após a realização de todos os passos anteriores, seguimos as seguintes etapas:
   - Compilar e executar o projeto no Visual Studio Code;
+
+<div align='center'>
+  <img src="img/sub.png" />
+<div>
+  
   - Atualizar as tabelas do banco de dados ms-email.
   
 Em seguida, na API Postman, criamos um método POST EMAIL, que será responsável por acessar a porta definida no projeto e enviar os atributos necessários do email para o método sending-email.
   
-![image](https://user-images.githubusercontent.com/110564584/197908189-4d389a5c-f0be-4460-a71b-c40dd9d9c4a1.png)
+<div align='center'>
+  <img src="img/postman-a.png" />  
+</div>
   
 Após a execução do método com sucesso, serão retornados os mesmos atributos enviados mais o id, data, hora e status de envio do email.
+  
+<div align='center'>
+  <img src="img/postman-d.png" />  
+</div>
 
 Finalmente, é possível confirmar o envio do email ao acessar a caixa de entrada do destinatário definido, comprovando o funcionamento adequado do serviço desenvolvido.
 </div>
