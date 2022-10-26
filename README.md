@@ -26,7 +26,7 @@ Integrantes do grupo:
 ### O que será necessário?
 ----
  - O serviço de e-mail terá sua própria base dados, nesse roteiro iremos utilizar o PostgreSQL;
- - Linguagem Java, nesse roteiro será a versão 11;
+ - Linguagem Java, nesse roteiro será utilizada a versão 11;
  - Maven Project, Spring Web, Spring Boot, na versão 2.7.4, e o Spring Mail;
  - Spring initializer;
  - IDE da sua escolha, nesse roteiro será utilizado o VSCode.
@@ -36,7 +36,7 @@ Integrantes do grupo:
 ----
 
 <div align='justify'>
-  <p>Para a criação do sistema inicial, poderá ser utilizado o site <a href = 'https://start.spring.io/'>Spring Initializr</a> selecionando o projeto como Maven, a versão do java e do spring boot além do nome do projeto. A parte mais importante das escolhas fica nas dependências, e para esse serviço escolhemos as seguintes</p>
+  <p>Para a criação do sistema inicial, poderá ser utilizado o site <a href = 'https://start.spring.io/'>Spring Initializr</a>, selecionando o projeto como Maven, a versão do java e do spring boot além do nome do projeto. A parte mais importante das escolhas fica nas dependências, e para esse serviço escolhemos as seguintes:</p>
   
   <ol>
     <li>Web
@@ -64,7 +64,7 @@ Integrantes do grupo:
     <img src="img/SI.png"/>
   </div>
 
-  <p>A partir da configurações realizadas acima, que podem ser obtidas no seguinte link <a href="https://start.spring.io/#!type=maven-project&language=java&platformVersion=2.7.4&packaging=jar&jvmVersion=11&groupId=com.microservices&artifactId=email&name=microservices-email&description=Projeto%20de%20um%20microsservi%C3%A7o%20para%20o%20envio%20de%20e-mails%20para%20a%20disciplina%20de%20Engenharia%20de%20Software&packageName=com.microservices.email&dependencies=web,data-jpa,postgresql,validation,mail,lombok">Configurações</a>, seguimos para a utilização de uma IDE que terá a uma estrutura de pastas como mostrado a seguir.</p>
+  <p>A partir da configurações realizadas acima, que podem ser obtidas no seguinte link <a href="https://start.spring.io/#!type=maven-project&language=java&platformVersion=2.7.4&packaging=jar&jvmVersion=11&groupId=com.microservices&artifactId=email&name=microservices-email&description=Projeto%20de%20um%20microsservi%C3%A7o%20para%20o%20envio%20de%20e-mails%20para%20a%20disciplina%20de%20Engenharia%20de%20Software&packageName=com.microservices.email&dependencies=web,data-jpa,postgresql,validation,mail,lombok">Configurações</a>, seguimos para a utilização de uma IDE que terá uma estrutura de pastas como mostrado a seguir.</p>
   
   <div align = 'center'>
     <img src="img/tree.png"/>
@@ -80,7 +80,7 @@ A fim de separar todo o processo em várias etapas, propomos a construção de a
   <img src="img/folders.png"/>
 </div>
 
-Na pasta resources há um arquivo chamado application.properties, esse serve para estabelecer a conexão com o banco de dados, no entanto, ainda está vazio. Como estamos utilizando o PostgreSQL, o código abaixo, com a porta 5432 estabelecerá a conexão:
+Na pasta resources há um arquivo chamado application.properties, que serve para estabelecer a conexão com o banco de dados. No entanto, inicialmente ele está vazio. Como estamos utilizando o PostgreSQL, o código abaixo, com a porta 5432, estabelecerá a conexão:
 
 ```
 server.port = 8080
@@ -91,7 +91,7 @@ spring.datasource.password = postgres
 spring.jpa.hibernate.ddl-auto = update
 ```
 
-Lembrando que 5432 é a porta padrão, caso tenha alterado, use a sua e o ms-email é o nome do banco criado no PostgreSQL.
+Lembrando que 5432 é a porta padrão, caso tenha alterado, utilize a porta escolhida. Já o ms-email é o nome do banco criado no PostgreSQL.
 
 <div align='center'>
   <img src="img/pgadmin4.png"/>
@@ -101,7 +101,7 @@ Lembrando que 5432 é a porta padrão, caso tenha alterado, use a sua e o ms-ema
 ## Configurando o model para recebimento de e-mails
 ---
 
-Com o banco de dados inicializado, devemos estabelecer as partes do nosso microsserviço e suas responsabilidades, começando pela pasta model, devemos criar um sistema de recebimento de armazenamento das informações do e-mail, destinatário e remetente, a data, o conteúdo e tudo que compõe o processo de comunicação, dito isso, em model, cria-se:
+Com o banco de dados inicializado, devemos estabelecer as partes do nosso microsserviço e suas responsabilidades. Começando pela pasta model, devemos criar um sistema de recebimento de armazenamento das informações do e-mail, destinatário e remetente, a data, o conteúdo e tudo que compõe o processo de comunicação. Dito isso, em model, cria-se:
 
 ```
 package com.microservices.email.models;
@@ -140,7 +140,7 @@ public class MEmail {
 }
 ```
 
-Como o estado do e-mail não é uma classe própria do Java, devemos criar. Estabeleceremos que ela contenha os possíveis estados de um e-mail, portanto, enviado ou não enviado (error). Passível de enumeração, vamos criar StatusEmail.java na pasta enum com o seguinte código:
+Como o estado do e-mail não é uma classe própria do Java, devemos criá-la. Estabeleceremos que ela contém os possíveis estados de um e-mail, portanto, enviado ou não enviado (error). Passível de enumeração, vamos criar o arquivo StatusEmail.java na pasta enum com o seguinte código:
 
 ```
 package com.microservices.email.enums;
@@ -156,7 +156,7 @@ public enum StatusEmail {
 ---
 ## Configurando o dtos
 ---
-Utilizado para transportar dados entre diferentes componentes de um sistema, o dto é utilizado em sistemas distribuídos e sistemas via serialização. A ideia é otimizar a comunicação por meio de um agrupamento de atributos, nesse caso 
+Utilizado para transportar dados entre diferentes componentes de um sistema, o dto é utilizado em sistemas distribuídos e sistemas via serialização. A ideia é otimizar a comunicação por meio de um agrupamento de atributos, nesse caso:
 
 ```
 package com.microservices.email.dtos;
@@ -184,13 +184,13 @@ public class DEmail {
 }
 
 ```
-A validação @NotBlank define que o setor recebido, por POST, não pode estar vazio e além disso, emailFrom e emailTo devem estar no formato de Email e para tal há essa validação de @Email.
+A validação @NotBlank define que o setor recebido por POST não pode estar vazio e, além disso, emailFrom e emailTo devem estar no formato de Email. Para tal, há essa validação de @Email.
   
 ---
 ## Configurando interfaces (repositories), services e controllers
 ---
   
-Anteriormente fora definido a forma da disposição das tabelas que vão compor o sistema, e portanto, é necessário estipular algo que povoe o sistema, para isso utilizamos uma interface que extende o JpaRepository, administrador de dados, dos quais, são formados pela entidade MEmail, já que esse é o modelo. Então, nos repositories adicionamos um arquivo com o seguinte código:
+Anteriormente, foi definido a forma da disposição das tabelas que vão compor o sistema e, portanto, é necessário estipular algo que povoe o sistema. Para isso, utilizamos uma interface que extende o JpaRepository, administrador de dados, dos quais são formados pela entidade MEmail, já que esse é o modelo. Então, adicionamos nos repositories um arquivo com o seguinte código:
 
 ```
 package com.microservices.email.repositories;
@@ -205,7 +205,7 @@ public interface REmail extends JpaRepository<MEmail, Long>{
 
 ```
 
-Com a interface criada, devemos criar um serviço para que ocorra a manipulação e a efetiva inserção dos dados. Portanto em serviços, criamos um novo arquivo com o seguinte detalhamento:
+Com a interface criada, devemos gerar um serviço para que ocorra a manipulação e a efetiva inserção dos dados. Portanto, em serviços, criamos um novo arquivo com o seguinte detalhamento:
   
 ```
   package com.microservices.email.services;
@@ -227,7 +227,7 @@ Com a interface criada, devemos criar um serviço para que ocorra a manipulaçã
   }
 
 ```
-Com o objetivo de conectar as operações do serviço com as tabelas que deverão existir se faz necessário o uso de um controlador. O controlador nesse caso cuidará do envio de e-mails, validando-os e os tranformando de DTO para modelo dessa forma o prontificando para a inserção. 
+Com o objetivo de conectar as operações do serviço com as tabelas que deverão existir, se faz necessário o uso de um controlador. O controlador nesse caso cuidará do envio de e-mails, validando-os e os tranformando de DTO para modelo, prontificando-o, dessa forma, para a inserção. 
   
 ```
 package com.microservices.email.controller;
@@ -349,7 +349,7 @@ Em seguida, na API Postman, criamos um método POST EMAIL, que será responsáve
   <img src="img/postman-a.png" />  
 </div>
   
-Após a execução do método com sucesso, serão retornados os mesmos atributos enviados mais o id, data, hora e status de envio do email.
+Após a execução do método com sucesso, serão retornados no próprio Postman os mesmos atributos enviados no email mais o id, data, hora e status de envio do email.
   
 <div align='center'>
   <img src="img/postman-d.png" />  
