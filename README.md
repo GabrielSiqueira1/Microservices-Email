@@ -351,6 +351,9 @@ Após a execução do método com sucesso, serão retornados os mesmos atributos
 </div>
 
 Finalmente, é possível confirmar o envio do email ao acessar a caixa de entrada do destinatário definido, comprovando o funcionamento adequado do serviço desenvolvido.
+
+![image](https://user-images.githubusercontent.com/110564584/198073530-c6db1199-b21f-4501-845b-52d7521d1d76.png)
+
 </div>
 
 
