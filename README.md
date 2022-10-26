@@ -264,7 +264,34 @@ public class CEmail {
 ---
 # Parte 2 - A instauração do SMTP
 ---
+
+A fins de demonstração, o envio de emails neste microserviço será feito através da utilização do Simple Mail Transfer Protocol (SMTP) da Google. Para um serviço mais robusto e completo, pode-se utilizar o Amazon SS (Simple Email Service).
+
+Para configurarmos o serviço em nossa aplicação, devemos adicionar e preencher campos específicos no arquivo application.properties. Ao adicionarmos campos utilizando o namespace spring.mail, o arquivo ficará com a seguinte configuração:
+
+```
+server.port=8080
+
+spring.datasource.url= jdbc:postgresql://localhost:5432/ms-email
+spring.datasource.username=postgres
+spring.datasource.password=banco123
+spring.jpa.hibernate.ddl-auto=update
+
+spring.mail.host=smtp.gmail.com
+spring.mail.port=587
+spring.mail.username=********@gmail.com
+spring.mail.password=******************
+spring.mail.properties.mail.smtp.auth=true
+spring.mail.properties.mail.smtp.starttls.enable=true
+
+```
+
+Os campos que restam a serem preenchidos, "username" e "password", devem ser completados da seguinte forma:
+  - Username: utiliza-se um endereço de email do próprio programador, que servirá como o remetente dos emails enviados;
+  - Password: esse campo deve ser preenchido com uma "senha de aplicativo", ou seja, um código de 16 dígitos gerado ao seguir o passo a passo presente no link https://support.google.com/accounts/answer/185833.
   
+Após a finalização da configuração do SMTP, o serviço já estará pronto para ser testado.
+
 </div>
 
 
