@@ -196,11 +196,13 @@ Anteriormente, foi definido a forma da disposição das tabelas que vão compor 
 ```
 package com.microservices.email.repositories;
 
+import java.util.UUID;  
+  
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.microservices.email.models.MEmail;
 
-public interface REmail extends JpaRepository<MEmail, Long>{
+public interface REmail extends JpaRepository<MEmail, UUID>{
 
 }
 
