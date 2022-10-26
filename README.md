@@ -294,11 +294,13 @@ Após a finalização da configuração do SMTP, o serviço já estará pronto p
   
 # Parte 3 - Testando o serviço
 
-Para a realização do teste do serviço de email, após a realização de todos os passos anteriores, seguimos os seguintes passos:
+Para a realização do teste do serviço de email, após a realização de todos os passos anteriores, seguimos as seguintes etapas:
   - Compilar e executar o projeto no Visual Studio Code;
   - Atualizar as tabelas do banco de dados ms-email.
   
 Em seguida, na API Postman, criamos um método POST EMAIL, que será responsável acessar a porta definida no projeto e enviar os atributos necessários do email para o método sending-email.
+  
+![image](https://user-images.githubusercontent.com/110564584/197908189-4d389a5c-f0be-4460-a71b-c40dd9d9c4a1.png)
   
 Após a execução do método com sucesso, serão retornados os mesmos atributos enviados mais o id, data, hora e status de envio do email.
 
