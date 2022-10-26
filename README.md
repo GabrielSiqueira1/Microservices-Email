@@ -25,7 +25,7 @@ Integrantes do grupo:
 ----
 ### O que será necessário?
 ----
- - O serviço de e-mail terá sua própria base dados, nesse roteiro iremos utilizar o PostgreSQL;
+ - O serviço de e-mail terá sua própria base dados, nesse roteiro iremos utilizar o PostgreSQL na versão 14;
  - Linguagem Java, nesse roteiro será utilizada a versão 11;
  - Maven Project, Spring Web, Spring Boot, na versão 2.7.4, e o Spring Mail;
  - Spring initializer;
