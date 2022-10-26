@@ -291,7 +291,18 @@ Os campos que restam a serem preenchidos, "username" e "password", devem ser com
   - Password: esse campo deve ser preenchido com uma "senha de aplicativo", ou seja, um código de 16 dígitos gerado ao seguir o passo a passo presente no link https://support.google.com/accounts/answer/185833.
   
 Após a finalização da configuração do SMTP, o serviço já estará pronto para ser testado.
+  
+# Parte 3 - Testando o serviço
 
+Para a realização do teste do serviço de email, após a realização de todos os passos anteriores, seguimos os seguintes passos:
+  - Compilar e executar o projeto no Visual Studio Code;
+  - Atualizar as tabelas do banco de dados ms-email.
+  
+Em seguida, na API Postman, criamos um método POST EMAIL, que será responsável acessar a porta definida no projeto e enviar os atributos necessários do email para o método sending-email.
+  
+Após a execução do método com sucesso, serão retornados os mesmos atributos enviados mais o id, data, hora e status de envio do email.
+
+Finalmente, é possível confirmar o envio do email ao acessar a caixa de entrada do destinatário definido, comprovando o funcionamento adequado do serviço desenvolvido.
 </div>
 
 
