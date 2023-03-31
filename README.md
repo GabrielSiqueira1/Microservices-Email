@@ -93,10 +93,6 @@ spring.jpa.hibernate.ddl-auto = update
 
 Lembrando que 5432 é a porta padrão, caso tenha alterado, utilize a porta escolhida. Já o ms-email é o nome do banco criado no PostgreSQL.
 
-<div align='center'>
-  <img src="img/pgadmin4.png"/>
-</div>
-
 ---
 ## Configurando o model para recebimento de e-mails
 ---
